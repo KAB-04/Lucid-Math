@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "MathTutor.Infrastructure/1.0.0": {
+        "dependencies": {
+          "MathTutor.Application": "1.0.0",
+          "MathTutor.Domain": "1.0.0"
+        },
+        "runtime": {
+          "MathTutor.Infrastructure.dll": {}
+        }
+      },
+      "MathTutor.Application/1.0.0": {
+        "runtime": {
+          "MathTutor.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "MathTutor.Domain/1.0.0": {
+        "dependencies": {
+          "MathTutor.Application": "1.0.0"
+        },
+        "runtime": {
+          "MathTutor.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MathTutor.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MathTutor.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MathTutor.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

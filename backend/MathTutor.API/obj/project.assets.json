@@ -36,6 +36,16 @@
             "related": ".pdb;.xml"
           }
         }
+      },
+      "MathTutor.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/MathTutor.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MathTutor.Application.dll": {}
+        }
       }
     }
   },
@@ -75,10 +85,16 @@
         "microsoft.openapi.2.0.0.nupkg.sha512",
         "microsoft.openapi.nuspec"
       ]
+    },
+    "MathTutor.Application/1.0.0": {
+      "type": "project",
+      "path": "../MathTutor.Application/MathTutor.Application.csproj",
+      "msbuildProject": "../MathTutor.Application/MathTutor.Application.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "MathTutor.Application >= 1.0.0",
       "Microsoft.AspNetCore.OpenApi >= 10.0.9"
     ]
   },
@@ -107,7 +123,11 @@
         "net10.0": {
           "framework": "net10.0",
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Application\\MathTutor.Application.csproj": {
+              "projectPath": "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Application\\MathTutor.Application.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

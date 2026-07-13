@@ -1,3 +1,6 @@
 <Solution>
   <Project Path="MathTutor.API/MathTutor.API.csproj" />
+  <Project Path="MathTutor.Application/MathTutor.Application.csproj" />
+  <Project Path="MathTutor.Domain/MathTutor.Domain.csproj" />
+  <Project Path="MathTutor.Infrastructure/MathTutor.Infrastructure.csproj" />
 </Solution>

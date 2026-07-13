@@ -32,3 +32,5 @@ C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.API\obj\
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.API\obj\Debug\net10.0\MathTutor.API.pdb
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.API\obj\Debug\net10.0\MathTutor.API.genruntimeconfig.cache
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.API\obj\Debug\net10.0\ref\MathTutor.API.dll
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.API\bin\Debug\net10.0\MathTutor.Application.dll
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.API\bin\Debug\net10.0\MathTutor.Application.pdb

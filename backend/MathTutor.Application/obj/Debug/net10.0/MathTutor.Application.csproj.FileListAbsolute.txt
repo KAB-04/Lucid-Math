@@ -1,0 +1,12 @@
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\bin\Debug\net10.0\MathTutor.Application.deps.json
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\bin\Debug\net10.0\MathTutor.Application.dll
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\bin\Debug\net10.0\MathTutor.Application.pdb
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\MathTutor.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\MathTutor.Application.AssemblyInfoInputs.cache
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\MathTutor.Application.AssemblyInfo.cs
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\MathTutor.Application.csproj.CoreCompileInputs.cache
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\MathTutor.Application.sourcelink.json
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\MathTutor.Application.dll
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\refint\MathTutor.Application.dll
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\MathTutor.Application.pdb
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\ref\MathTutor.Application.dll
