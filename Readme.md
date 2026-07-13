@@ -27,4 +27,4 @@ Frontend:
 - React
 
 AI:
-- Gemini API
+- Gemini APIcls
