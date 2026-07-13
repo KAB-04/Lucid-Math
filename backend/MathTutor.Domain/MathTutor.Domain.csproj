@@ -6,8 +6,5 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MathTutor.Application\MathTutor.Application.csproj" />
-  </ItemGroup>
 
 </Project>

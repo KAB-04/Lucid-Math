@@ -16,3 +16,5 @@ C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Infrastr
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Infrastructure\obj\Debug\net10.0\ref\MathTutor.Infrastructure.dll
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Infrastructure\bin\Debug\net10.0\MathTutor.Domain.dll
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Infrastructure\bin\Debug\net10.0\MathTutor.Domain.pdb
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Infrastructure\bin\Debug\net10.0\MathTutor.Infrastructure.runtimeconfig.json
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Infrastructure\obj\Debug\net10.0\MathTutor.Infrastructure.genruntimeconfig.cache

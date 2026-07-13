@@ -1,41 +1,89 @@
+using Microsoft.EntityFrameworkCore;
+using MathTutor.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+builder.Services.AddControllers();
+
+
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options =>
+    options.UseNpgsql(
+        builder.Configuration
+        .GetConnectionString("DefaultConnection")
+    )
+);
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+app.MapControllers();
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
+app.MapGet("/", async (ApplicationDbContext dbContext) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    try
+    {
+        var isConnected = await dbContext.Database.CanConnectAsync();
+        var html = $$"""
+        <!DOCTYPE html>
+        <html lang=\"en\">
+        <head>
+            <meta charset=\"utf-8\" />
+            <title>MathTutor Database Status</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 2rem; }
+                .ok { color: green; }
+                .error { color: crimson; }
+            </style>
+        </head>
+        <body>
+            <h1>MathTutor Database Status</h1>
+            <p class=\"{{(isConnected ? "ok" : "error")}}\">Status: {{(isConnected ? "Connected" : "Disconnected")}}</p>
+            <p>Database: PostgreSQL</p>
+            <p>Connection string: {{(isConnected ? "Successful" : "Unable to connect")}}</p>
+        </body>
+        </html>
+        """;
 
-app.MapGet("/weatherforecast", () =>
+        return Results.Content(html, "text/html");
+    }
+    catch (Exception ex)
+    {
+        var html = $$"""
+        <!DOCTYPE html>
+        <html lang=\"en\">
+        <head>
+            <meta charset=\"utf-8\" />
+            <title>MathTutor Database Status</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 2rem; }
+                .error { color: crimson; }
+            </style>
+        </head>
+        <body>
+            <h1>MathTutor Database Status</h1>
+            <p class=\"error\">Status: Disconnected</p>
+            <p>{{ex.Message}}</p>
+        </body>
+        </html>
+        """;
+
+        return Results.Content(html, "text/html");
+    }
+});
+
+app.MapGet("/health", async (ApplicationDbContext dbContext) =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    try
+    {
+        await dbContext.Database.CanConnectAsync();
+        return Results.Ok(new { status = "connected", database = "postgres" });
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(ex.Message);
+    }
+});
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

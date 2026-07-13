@@ -10,7 +10,3 @@ C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\o
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\refint\MathTutor.Domain.dll
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTutor.Domain.pdb
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\ref\MathTutor.Domain.dll
-C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\bin\Debug\net10.0\MathTutor.Application.dll
-C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\bin\Debug\net10.0\MathTutor.Application.pdb
-C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTutor.Domain.csproj.AssemblyReference.cache
-C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTuto.1F9503E1.Up2Date
