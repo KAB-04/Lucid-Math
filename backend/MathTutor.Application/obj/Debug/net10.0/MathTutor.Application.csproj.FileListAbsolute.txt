@@ -10,3 +10,4 @@ C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Applicat
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\refint\MathTutor.Application.dll
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\MathTutor.Application.pdb
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\ref\MathTutor.Application.dll
+C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Application\obj\Debug\net10.0\MathTutor.Application.csproj.AssemblyReference.cache
