@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MathTutor.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e374c9e91337f656dd9587a9815a51b894d1f38")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23b976a88dec6bd73271575d82cb2e025f9c250a")]
 [assembly: System.Reflection.AssemblyProductAttribute("MathTutor.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MathTutor.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
