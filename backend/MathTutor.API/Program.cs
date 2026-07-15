@@ -6,6 +6,7 @@ using MathTutor.Application.Interfaces.Services;
 using MathTutor.Application.Services;
 using Microsoft.AspNetCore.Identity;
 using MathTutor.Domain.Identity;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -30,18 +31,8 @@ builder.Services.AddControllers();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddAutoMapper(typeof(StudentProfile).Assembly);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-
-builder.Services
-    .AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(
-    builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services
     .AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -62,21 +53,6 @@ builder.Services
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection("Jwt"));
 
-
-
-var app = builder.Build();
-
-// Enable Swagger only in Development
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-var jwtSettings = builder.Configuration
-    .GetSection("Jwt")
-    .Get<JwtSettings>()!;
-
 builder.Services
     .AddAuthentication(options =>
     {
@@ -85,6 +61,10 @@ builder.Services
     })
     .AddJwtBearer(options =>
     {
+        var jwtSettings = builder.Configuration
+            .GetSection("Jwt")
+            .Get<JwtSettings>()!;
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -99,6 +79,14 @@ builder.Services
                 Encoding.UTF8.GetBytes(jwtSettings.Key))
         };
     });
+
+var app = builder.Build();
+
+// Enable OpenAPI exploration only in Development
+if (app.Environment.IsDevelopment())
+{
+    // Swagger is disabled because the current Swashbuckle package version causes a runtime mismatch.
+}
 
 app.UseHttpsRedirection();
 

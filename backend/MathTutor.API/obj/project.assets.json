@@ -2,20 +2,29 @@
   "version": 4,
   "targets": {
     "net10.0": {
-      "AutoMapper/16.2.0": {
+      "AutoMapper/12.0.1": {
         "type": "package",
-        "dependencies": {
-          "Microsoft.IdentityModel.JsonWebTokens": "8.14.0"
-        },
         "compile": {
-          "lib/net10.0/AutoMapper.dll": {
+          "lib/netstandard2.1/AutoMapper.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net10.0/AutoMapper.dll": {
+          "lib/netstandard2.1/AutoMapper.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "AutoMapper.Extensions.Microsoft.DependencyInjection/12.0.1": {
+        "type": "package",
+        "dependencies": {
+          "AutoMapper": "[12.0.1]"
+        },
+        "compile": {
+          "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
       "FluentValidation/12.1.1": {
@@ -922,9 +931,11 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "AutoMapper": "16.2.0",
+          "AutoMapper": "12.0.1",
           "FluentValidation": "12.1.1",
-          "Mapster": "10.0.10"
+          "Mapster": "10.0.10",
+          "MathTutor.Domain": "1.0.0",
+          "System.IdentityModel.Tokens.Jwt": "8.4.0"
         },
         "compile": {
           "bin/placeholder/MathTutor.Application.dll": {}
@@ -936,6 +947,10 @@
       "MathTutor.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "10.0.9",
+          "Microsoft.EntityFrameworkCore": "10.0.9"
+        },
         "compile": {
           "bin/placeholder/MathTutor.Domain.dll": {}
         },
@@ -963,28 +978,33 @@
     }
   },
   "libraries": {
-    "AutoMapper/16.2.0": {
-      "sha512": "PE8HgPc5BZJnAFwjvDTE72gWL6YrYib+V7+vxtLXDYz0CH/fFgbVcwLUC9UHk5ALwspZ6Vbmoo6PHvseIk/0ZA==",
+    "AutoMapper/12.0.1": {
+      "sha512": "hvV62vl6Hp/WfQ24yzo3Co9+OPl8wH8hApwVtgWpiAynVJkUcs7xvehnSftawL8Pe8FrPffBRM3hwzLQqWDNjA==",
       "type": "package",
-      "path": "automapper/16.2.0",
+      "path": "automapper/12.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "LICENSE.md",
         "README.md",
-        "automapper.16.2.0.nupkg.sha512",
+        "automapper.12.0.1.nupkg.sha512",
         "automapper.nuspec",
         "icon.png",
-        "lib/net10.0/AutoMapper.dll",
-        "lib/net10.0/AutoMapper.xml",
-        "lib/net471/AutoMapper.dll",
-        "lib/net471/AutoMapper.xml",
-        "lib/net8.0/AutoMapper.dll",
-        "lib/net8.0/AutoMapper.xml",
-        "lib/net9.0/AutoMapper.dll",
-        "lib/net9.0/AutoMapper.xml",
-        "lib/netstandard2.0/AutoMapper.dll",
-        "lib/netstandard2.0/AutoMapper.xml"
+        "lib/netstandard2.1/AutoMapper.dll",
+        "lib/netstandard2.1/AutoMapper.xml"
+      ]
+    },
+    "AutoMapper.Extensions.Microsoft.DependencyInjection/12.0.1": {
+      "sha512": "+g/K+Vpe3gGMKGzjslMOdqNlkikScDjWfVvmWTayrDHaG/n2pPmFBMa+jKX1r/h6BDGFdkyRjAuhFE3ykW+r1g==",
+      "type": "package",
+      "path": "automapper.extensions.microsoft.dependencyinjection/12.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+        "automapper.extensions.microsoft.dependencyinjection.nuspec",
+        "icon.png",
+        "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
       ]
     },
     "FluentValidation/12.1.1": {
@@ -2849,7 +2869,8 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
-      "AutoMapper >= 16.2.0",
+      "AutoMapper >= 12.0.1",
+      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
       "FluentValidation.AspNetCore >= 11.3.1",
       "MathTutor.Application >= 1.0.0",
       "MathTutor.Infrastructure >= 1.0.0",
@@ -2866,11 +2887,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.API\\MathTutor.API.csproj",
+      "projectUniqueName": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.API\\MathTutor.API.csproj",
       "projectName": "MathTutor.API",
-      "projectPath": "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.API\\MathTutor.API.csproj",
+      "projectPath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.API\\MathTutor.API.csproj",
       "packagesPath": "C:\\Users\\kojoa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.API\\obj\\",
+      "outputPath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kojoa\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -2886,11 +2907,11 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Application\\MathTutor.Application.csproj": {
-              "projectPath": "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Application\\MathTutor.Application.csproj"
+            "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Application\\MathTutor.Application.csproj": {
+              "projectPath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Application\\MathTutor.Application.csproj"
             },
-            "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Infrastructure\\MathTutor.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Infrastructure\\MathTutor.Infrastructure.csproj"
+            "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Infrastructure\\MathTutor.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Infrastructure\\MathTutor.Infrastructure.csproj"
             }
           }
         }
@@ -2914,7 +2935,11 @@
         "dependencies": {
           "AutoMapper": {
             "target": "Package",
-            "version": "[16.2.0, )"
+            "version": "[12.0.1, )"
+          },
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+            "target": "Package",
+            "version": "[12.0.1, )"
           },
           "FluentValidation.AspNetCore": {
             "target": "Package",
@@ -3381,6 +3406,16 @@
     }
   },
   "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
+      "libraryId": "AutoMapper",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
     {
       "code": "NU1903",
       "level": "Warning",

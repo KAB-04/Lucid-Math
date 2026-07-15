@@ -7,4 +7,6 @@ public class StudentDto
     public string Email { get; set; } = string.Empty;
 
     public string EducationLevel { get; set; } = string.Empty;
+
+    public DateTime CreatedAt { get; set; }
 }

@@ -1,5 +1,11 @@
-public class ApplicationDbContext
-    : IdentityDbContext<ApplicationUser>
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using MathTutor.Domain.Entities;
+using MathTutor.Domain.Identity;
+
+namespace MathTutor.Infrastructure;
+
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options)
@@ -8,8 +14,11 @@ public class ApplicationDbContext
     }
 
     public DbSet<Student> Students => Set<Student>();
-
-    // other DbSets...
+    public DbSet<Topic> Topics => Set<Topic>();
+    public DbSet<Question> Questions => Set<Question>();
+    public DbSet<Assessment> Assessments => Set<Assessment>();
+    public DbSet<LearnerProfile> LearnerProfiles => Set<LearnerProfile>();
+    public DbSet<LearningHistory> LearningHistories => Set<LearningHistory>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

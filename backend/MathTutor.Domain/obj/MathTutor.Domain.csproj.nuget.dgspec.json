@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Domain\\MathTutor.Domain.csproj": {}
+    "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Domain\\MathTutor.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Domain\\MathTutor.Domain.csproj": {
+    "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Domain\\MathTutor.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Domain\\MathTutor.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Domain\\MathTutor.Domain.csproj",
         "projectName": "MathTutor.Domain",
-        "projectPath": "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Domain\\MathTutor.Domain.csproj",
+        "projectPath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Domain\\MathTutor.Domain.csproj",
         "packagesPath": "C:\\Users\\kojoa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kojoa\\Desktop\\UMAT\\c#project\\Math\\Lucid-Math\\backend\\MathTutor.Domain\\obj\\",
+        "outputPath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kojoa\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -45,6 +45,16 @@
         "net10.0": {
           "framework": "net10.0",
           "targetAlias": "net10.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.9, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

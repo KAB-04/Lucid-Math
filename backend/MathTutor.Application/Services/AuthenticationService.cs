@@ -31,40 +31,93 @@ public class AuthenticationService : IAuthenticationService
         _jwtTokenService = jwtTokenService;
     }
 
+    public async Task<AuthenticationResponse> RegisterAsync(RegisterRequest request)
+    {
+        var existingUser = await _userManager.FindByEmailAsync(request.Email);
+
+        if (existingUser != null)
+        {
+            return new AuthenticationResponse
+            {
+                Success = false,
+                Message = "Email is already registered."
+            };
+        }
+
+        var user = new ApplicationUser
+        {
+            UserName = request.Email,
+            Email = request.Email,
+            FullName = request.FullName
+        };
+
+        var result = await _userManager.CreateAsync(user, request.Password);
+
+        if (!result.Succeeded)
+        {
+            return new AuthenticationResponse
+            {
+                Success = false,
+                Message = string.Join(" ", result.Errors.Select(e => e.Description))
+            };
+        }
+
+        var student = new Student
+        {
+            UserId = user.Id,
+            User = user,
+            FullName = request.FullName,
+            Email = request.Email,
+            EducationLevel = request.EducationLevel
+        };
+
+        await _studentRepository.CreateAsync(student);
+
+        var token = await _jwtTokenService.GenerateTokenAsync(user);
+
+        return new AuthenticationResponse
+        {
+            Success = true,
+            Message = "Registration successful.",
+            Token = token,
+            Expires = DateTime.UtcNow.AddMinutes(60)
+        };
+    }
+
     public async Task<AuthenticationResponse> LoginAsync(LoginRequest request)
- {
-    var user = await _userManager.FindByEmailAsync(request.Email);
-
-    if (user == null)
     {
+        var user = await _userManager.FindByEmailAsync(request.Email);
+
+        if (user == null)
+        {
+            return new AuthenticationResponse
+            {
+                Success = false,
+                Message = "Invalid email or password."
+            };
+        }
+
+        var validPassword = await _userManager.CheckPasswordAsync(
+            user,
+            request.Password);
+
+        if (!validPassword)
+        {
+            return new AuthenticationResponse
+            {
+                Success = false,
+                Message = "Invalid email or password."
+            };
+        }
+
+        var token = await _jwtTokenService.GenerateTokenAsync(user);
+
         return new AuthenticationResponse
         {
-            Success = false,
-            Message = "Invalid email or password."
+            Success = true,
+            Message = "Login successful.",
+            Token = token,
+            Expires = DateTime.UtcNow.AddMinutes(60)
         };
     }
-
-    var validPassword = await _userManager.CheckPasswordAsync(
-        user,
-        request.Password);
-
-    if (!validPassword)
-    {
-        return new AuthenticationResponse
-        {
-            Success = false,
-            Message = "Invalid email or password."
-        };
-    }
-
-    var token = await _jwtTokenService.GenerateTokenAsync(user);
-
-    return new AuthenticationResponse
-    {
-        Success = true,
-        Message = "Login successful.",
-        Token = token,
-        Expires = DateTime.UtcNow.AddMinutes(60)
-    };
- }
 }
