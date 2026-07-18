@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using MathTutor.Application.DTOs.Authentication;
 using MathTutor.Application.Interfaces.Repositories;
@@ -8,32 +7,31 @@ using MathTutor.Domain.Identity;
 
 namespace MathTutor.Application.Services;
 
-
 public class AuthenticationService : IAuthenticationService
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IStudentRepository _studentRepository;
-    private readonly IMapper _mapper;
     private readonly IJwtTokenService _jwtTokenService;
 
+
     public AuthenticationService(
-    UserManager<ApplicationUser> userManager,
-    RoleManager<IdentityRole> roleManager,
-    IStudentRepository studentRepository,
-    IMapper mapper,
-    IJwtTokenService jwtTokenService)
+        UserManager<ApplicationUser> userManager,
+        IStudentRepository studentRepository,
+        IJwtTokenService jwtTokenService)
     {
         _userManager = userManager;
-        _roleManager = roleManager;
         _studentRepository = studentRepository;
-        _mapper = mapper;
         _jwtTokenService = jwtTokenService;
     }
 
-    public async Task<AuthenticationResponse> RegisterAsync(RegisterRequest request)
+
+
+    public async Task<AuthenticationResponse> RegisterAsync(
+        RegisterRequest request)
     {
-        var existingUser = await _userManager.FindByEmailAsync(request.Email);
+        var existingUser =
+            await _userManager.FindByEmailAsync(request.Email);
+
 
         if (existingUser != null)
         {
@@ -44,6 +42,8 @@ public class AuthenticationService : IAuthenticationService
             };
         }
 
+
+
         var user = new ApplicationUser
         {
             UserName = request.Email,
@@ -51,17 +51,38 @@ public class AuthenticationService : IAuthenticationService
             FullName = request.FullName
         };
 
-        var result = await _userManager.CreateAsync(user, request.Password);
+
+
+        var result =
+            await _userManager.CreateAsync(
+                user,
+                request.Password);
+
+
 
         if (!result.Succeeded)
         {
             return new AuthenticationResponse
             {
                 Success = false,
-                Message = string.Join(" ", result.Errors.Select(e => e.Description))
+                Message = string.Join(
+                    " ",
+                    result.Errors.Select(
+                        e => e.Description))
             };
         }
 
+
+
+        // Assign default role
+        await _userManager.AddToRoleAsync(
+            user,
+            "Student");
+
+
+
+
+        // Create Student Profile
         var student = new Student
         {
             UserId = user.Id,
@@ -71,9 +92,17 @@ public class AuthenticationService : IAuthenticationService
             EducationLevel = request.EducationLevel
         };
 
+
+
         await _studentRepository.CreateAsync(student);
 
-        var token = await _jwtTokenService.GenerateTokenAsync(user);
+
+
+
+        var token =
+            await _jwtTokenService.GenerateTokenAsync(user);
+
+
 
         return new AuthenticationResponse
         {
@@ -84,9 +113,17 @@ public class AuthenticationService : IAuthenticationService
         };
     }
 
-    public async Task<AuthenticationResponse> LoginAsync(LoginRequest request)
+
+
+
+
+    public async Task<AuthenticationResponse> LoginAsync(
+        LoginRequest request)
     {
-        var user = await _userManager.FindByEmailAsync(request.Email);
+        var user =
+            await _userManager.FindByEmailAsync(request.Email);
+
+
 
         if (user == null)
         {
@@ -97,9 +134,15 @@ public class AuthenticationService : IAuthenticationService
             };
         }
 
-        var validPassword = await _userManager.CheckPasswordAsync(
-            user,
-            request.Password);
+
+
+
+        var validPassword =
+            await _userManager.CheckPasswordAsync(
+                user,
+                request.Password);
+
+
 
         if (!validPassword)
         {
@@ -110,7 +153,13 @@ public class AuthenticationService : IAuthenticationService
             };
         }
 
-        var token = await _jwtTokenService.GenerateTokenAsync(user);
+
+
+
+        var token =
+            await _jwtTokenService.GenerateTokenAsync(user);
+
+
 
         return new AuthenticationResponse
         {

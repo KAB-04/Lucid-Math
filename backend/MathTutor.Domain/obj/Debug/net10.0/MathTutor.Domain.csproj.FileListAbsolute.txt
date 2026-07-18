@@ -10,6 +10,10 @@ C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\o
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\refint\MathTutor.Domain.dll
 C:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTutor.Domain.pdb
 c:\Users\kojoa\Desktop\UMAT\c#project\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\ref\MathTutor.Domain.dll
+C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\bin\Debug\net10.0\MathTutor.Domain.deps.json
+C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\bin\Debug\net10.0\MathTutor.Domain.dll
+C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\bin\Debug\net10.0\MathTutor.Domain.pdb
+C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTutor.Domain.csproj.AssemblyReference.cache
 C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTutor.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTutor.Domain.AssemblyInfoInputs.cache
 C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTutor.Domain.AssemblyInfo.cs
@@ -18,8 +22,4 @@ C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\obj
 C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTutor.Domain.dll
 C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\refint\MathTutor.Domain.dll
 C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTutor.Domain.pdb
-C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\MathTutor.Domain.csproj.AssemblyReference.cache
-C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\bin\Debug\net10.0\MathTutor.Domain.deps.json
-C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\bin\Debug\net10.0\MathTutor.Domain.dll
-C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\bin\Debug\net10.0\MathTutor.Domain.pdb
 C:\Users\kojoa\Desktop\Umat\C-SHARP\Math\Lucid-Math\backend\MathTutor.Domain\obj\Debug\net10.0\ref\MathTutor.Domain.dll

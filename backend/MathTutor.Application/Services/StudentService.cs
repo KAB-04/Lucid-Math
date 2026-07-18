@@ -9,43 +9,59 @@ public class StudentService : IStudentService
 {
     private readonly IStudentRepository _studentRepository;
 
-    public StudentService(IStudentRepository studentRepository)
+
+    public StudentService(
+        IStudentRepository studentRepository)
     {
         _studentRepository = studentRepository;
     }
+
+
 
     public async Task<IEnumerable<StudentDto>> GetAllAsync()
     {
         var students = await _studentRepository.GetAllAsync();
 
-        return students.Select(student => new StudentDto
-        {
-            Id = student.Id,
-            FullName = student.FullName,
-            Email = student.Email,
-            EducationLevel = student.EducationLevel,
-            CreatedAt = student.CreatedAt
-        });
+
+        return students.Select(student => MapToDto(student));
     }
+
+
 
     public async Task<StudentDto?> GetByIdAsync(int id)
     {
-        var student = await _studentRepository.GetByIdAsync(id);
+        var student = await _studentRepository
+            .GetByIdAsync(id);
 
-        if (student == null)
+
+        if(student == null)
             return null;
 
-        return new StudentDto
-        {
-            Id = student.Id,
-            FullName = student.FullName,
-            Email = student.Email,
-            EducationLevel = student.EducationLevel,
-            CreatedAt = student.CreatedAt
-        };
+
+        return MapToDto(student);
     }
 
-    public async Task<StudentDto> CreateAsync(CreateStudentDto dto)
+
+
+    public async Task<StudentDto?> GetByEmailAsync(
+        string email)
+    {
+        var student = await _studentRepository
+            .GetByEmailAsync(email);
+
+
+        if(student == null)
+            return null;
+
+
+        return MapToDto(student);
+    }
+
+
+
+
+    public async Task<StudentDto> CreateAsync(
+        CreateStudentDto dto)
     {
         var student = new Student
         {
@@ -54,44 +70,97 @@ public class StudentService : IStudentService
             EducationLevel = dto.EducationLevel
         };
 
-        var createdStudent = await _studentRepository.CreateAsync(student);
 
-        return new StudentDto
-        {
-            Id = createdStudent.Id,
-            FullName = createdStudent.FullName,
-            Email = createdStudent.Email,
-            EducationLevel = createdStudent.EducationLevel,
-            CreatedAt = createdStudent.CreatedAt
-        };
+        var createdStudent =
+            await _studentRepository.CreateAsync(student);
+
+
+        return MapToDto(createdStudent);
     }
 
-    public async Task<bool> UpdateAsync(int id, UpdateStudentDto dto)
-    {
-        var student = await _studentRepository.GetByIdAsync(id);
 
-        if (student == null)
+
+
+    public async Task<bool> UpdateAsync(
+        int id,
+        UpdateStudentDto dto)
+    {
+        var student =
+            await _studentRepository.GetByIdAsync(id);
+
+
+        if(student == null)
             return false;
+
 
         student.FullName = dto.FullName;
         student.EducationLevel = dto.EducationLevel;
 
+
         await _studentRepository.UpdateAsync(student);
+
 
         return true;
     }
+
+
+
+
+
+    public async Task<bool> UpdateByEmailAsync(
+        string email,
+        UpdateStudentDto dto)
+    {
+        var student =
+            await _studentRepository.GetByEmailAsync(email);
+
+
+        if(student == null)
+            return false;
+
+
+        student.FullName = dto.FullName;
+        student.EducationLevel = dto.EducationLevel;
+
+
+        await _studentRepository.UpdateAsync(student);
+
+
+        return true;
+    }
+
+
+
+
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var student = await _studentRepository.GetByIdAsync(id);
+        var student =
+            await _studentRepository.GetByIdAsync(id);
 
-        if (student == null)
+
+        if(student == null)
             return false;
 
+
         await _studentRepository.DeleteAsync(student);
+
 
         return true;
     }
 
-    
+
+
+
+    private static StudentDto MapToDto(Student student)
+    {
+        return new StudentDto
+        {
+            Id = student.Id,
+            FullName = student.FullName,
+            Email = student.Email,
+            EducationLevel = student.EducationLevel,
+            CreatedAt = student.CreatedAt
+        };
+    }
 }

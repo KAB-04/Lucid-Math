@@ -1,139 +1,313 @@
-using Microsoft.EntityFrameworkCore;
-using MathTutor.Infrastructure;
-using MathTutor.Infrastructure.Repositories;
+using System.Text;
+using AutoMapper;
 using MathTutor.Application.Interfaces.Repositories;
 using MathTutor.Application.Interfaces.Services;
 using MathTutor.Application.Services;
-using Microsoft.AspNetCore.Identity;
-using MathTutor.Domain.Identity;
-using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using MathTutor.Application.Settings;
+using MathTutor.Domain.Identity;
+using MathTutor.Infrastructure;
+using MathTutor.Infrastructure.Data;
+using MathTutor.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Database
+
+
+#region Database
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    ));
+        builder.Configuration
+        .GetConnectionString("DefaultConnection")));
 
-// Dependency Injection
-builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-builder.Services.AddScoped<IStudentService, StudentService>();
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+#endregion
 
-// Controllers
-builder.Services.AddControllers();
 
-// Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+
+#region Identity
 
 builder.Services
     .AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
-        // Password settings
+        // Password Settings
         options.Password.RequireDigit = true;
         options.Password.RequireLowercase = true;
         options.Password.RequireUppercase = true;
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequiredLength = 8;
 
-        // User settings
+
+        // User Settings
         options.User.RequireUniqueEmail = true;
+
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+#endregion
+
+
+
+
+
+#region JWT Authentication
+
+
 builder.Services.Configure<JwtSettings>(
-    builder.Configuration.GetSection("Jwt"));
+    builder.Configuration
+    .GetSection("Jwt"));
+
+
+
+var jwtSettings = builder.Configuration
+    .GetSection("Jwt")
+    .Get<JwtSettings>();
+
+
 
 builder.Services
     .AddAuthentication(options =>
     {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultAuthenticateScheme =
+            JwtBearerDefaults.AuthenticationScheme;
+
+
+        options.DefaultChallengeScheme =
+            JwtBearerDefaults.AuthenticationScheme;
+
     })
     .AddJwtBearer(options =>
     {
-        var jwtSettings = builder.Configuration
-            .GetSection("Jwt")
-            .Get<JwtSettings>()!;
+        options.TokenValidationParameters =
+            new TokenValidationParameters
+            {
+                ValidateIssuer = true,
 
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
+                ValidateAudience = true,
 
-            ValidIssuer = jwtSettings.Issuer,
-            ValidAudience = jwtSettings.Audience,
+                ValidateLifetime = true,
 
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwtSettings.Key))
-        };
-    });
+                ValidateIssuerSigningKey = true,
+
+
+                ValidIssuer =
+                    jwtSettings!.Issuer,
+
+
+                ValidAudience =
+                    jwtSettings.Audience,
+
+
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(
+                            jwtSettings.Key))
+            });
+
+
+
+
+builder.Services.AddAuthorization();
+
+#endregion
+
+
+
+
+
+#region Dependency Injection
+
+
+// Repositories
+builder.Services.AddScoped<
+    IStudentRepository,
+    StudentRepository>();
+
+
+
+// Services
+builder.Services.AddScoped<
+    IStudentService,
+    StudentService>();
+
+
+builder.Services.AddScoped<
+    IAuthenticationService,
+    AuthenticationService>();
+
+
+builder.Services.AddScoped<
+    IJwtTokenService,
+    JwtTokenService>();
+
+
+#endregion
+
+
+
+
+
+#region AutoMapper
+
+
+builder.Services.AddAutoMapper(
+    AppDomain.CurrentDomain.GetAssemblies());
+
+
+#endregion
+
+
+
+
+
+#region Controllers
+
+
+builder.Services.AddControllers();
+
+
+#endregion
+
+
+
+
+
 
 var app = builder.Build();
 
-// Enable OpenAPI exploration only in Development
-if (app.Environment.IsDevelopment())
+
+
+
+
+
+#region Database Seeding
+
+
+using(var scope = app.Services.CreateScope())
 {
-    // Swagger is disabled because the current Swashbuckle package version causes a runtime mismatch.
+    var roleManager =
+        scope.ServiceProvider
+        .GetRequiredService<RoleManager<IdentityRole>>();
+
+
+    await DbSeeder.SeedRoles(roleManager);
 }
+
+
+#endregion
+
+
+
+
+
+
+
+#region Middleware
+
 
 app.UseHttpsRedirection();
 
+
 app.UseAuthentication();
 
+
 app.UseAuthorization();
+
 
 app.MapControllers();
 
 
-// Optional Home Page
-app.MapGet("/", async (ApplicationDbContext dbContext) =>
+#endregion
+
+
+
+
+
+
+
+#region API Health Endpoints
+
+
+
+app.MapGet("/", async (
+    ApplicationDbContext dbContext) =>
 {
     try
     {
-        var connected = await dbContext.Database.CanConnectAsync();
+        var connected =
+            await dbContext.Database
+            .CanConnectAsync();
+
 
         return Results.Ok(new
         {
             Application = "Lucid Math API",
-            Database = connected ? "Connected" : "Disconnected",
-            Status = connected ? "Healthy" : "Unhealthy"
+
+            Version = "1.0.0",
+
+            Status = connected
+                ? "Healthy"
+                : "Unhealthy",
+
+            Database = connected
+                ? "Connected"
+                : "Disconnected",
+
+            Time = DateTime.UtcNow
         });
+
     }
-    catch (Exception ex)
+    catch(Exception ex)
     {
-        return Results.Problem(ex.Message);
+        return Results.Problem(
+            ex.Message);
     }
 });
 
-// Health Check
-app.MapGet("/health", async (ApplicationDbContext dbContext) =>
+
+
+
+
+app.MapGet("/health", async (
+    ApplicationDbContext dbContext) =>
 {
     try
     {
-        await dbContext.Database.CanConnectAsync();
+        var connected =
+            await dbContext.Database
+            .CanConnectAsync();
+
 
         return Results.Ok(new
         {
-            status = "Healthy",
-            database = "PostgreSQL"
+            status = connected
+                ? "Healthy"
+                : "Unhealthy",
+
+            database = "PostgreSQL",
+
+            timestamp = DateTime.UtcNow
         });
+
     }
-    catch (Exception ex)
+    catch(Exception ex)
     {
-        return Results.Problem(ex.Message);
+        return Results.Problem(
+            ex.Message);
     }
 });
+
+#endregion
+
+
+
+
+
 
 app.Run();
