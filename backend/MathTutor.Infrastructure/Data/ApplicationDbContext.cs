@@ -17,6 +17,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Topic> Topics => Set<Topic>();
     public DbSet<Question> Questions => Set<Question>();
     public DbSet<Assessment> Assessments => Set<Assessment>();
+    public DbSet<AssessmentQuestion> AssessmentQuestions => Set<AssessmentQuestion>();
+    public DbSet<StudentAnswer> StudentAnswers => Set<StudentAnswer>();
     public DbSet<LearnerProfile> LearnerProfiles => Set<LearnerProfile>();
     public DbSet<LearningHistory> LearningHistories => Set<LearningHistory>();
 
@@ -29,5 +31,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithOne(u => u.Student)
             .HasForeignKey<Student>(s => s.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<AssessmentQuestion>()
+            .HasIndex(aq => new { aq.AssessmentId, aq.QuestionId })
+            .IsUnique();
+
+        builder.Entity<StudentAnswer>()
+            .HasIndex(sa => new { sa.AssessmentId, sa.QuestionId })
+            .IsUnique();
     }
 }

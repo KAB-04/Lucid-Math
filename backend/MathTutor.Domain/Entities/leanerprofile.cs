@@ -7,6 +7,23 @@ public class LearnerProfile
 
     public double OverallMastery { get; set; }
 
+    public string StrongestTopic { get; set; }
+        = string.Empty;
+
+    public string WeakestTopic { get; set; }
+        = string.Empty;
+
+    public int RecommendedDifficultyLevel { get; set; } = 1;
+
+    public string RecommendedNextTopic { get; set; }
+        = string.Empty;
+
+    public string TeachingApproach { get; set; }
+        = string.Empty;
+
+    public DateTime LastUpdated { get; set; }
+        = DateTime.UtcNow;
+
 
     public string Strengths { get; set; }
         = string.Empty;

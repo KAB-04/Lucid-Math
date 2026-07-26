@@ -9,12 +9,21 @@ using MathTutor.Infrastructure;
 using MathTutor.Infrastructure.Data;
 using MathTutor.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(
+        Path.Combine(builder.Environment.ContentRootPath, "DataProtectionKeys")));
 
 
 
@@ -108,7 +117,8 @@ builder.Services
                     new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(
                             jwtSettings.Key))
-            });
+            };
+    });
 
 
 
@@ -147,6 +157,10 @@ builder.Services.AddScoped<
     JwtTokenService>();
 
 
+builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+builder.Services.AddScoped<ITopicService, TopicService>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
 #endregion
 
 
@@ -195,8 +209,16 @@ using(var scope = app.Services.CreateScope())
         scope.ServiceProvider
         .GetRequiredService<RoleManager<IdentityRole>>();
 
+    var userManager =
+        scope.ServiceProvider
+        .GetRequiredService<UserManager<ApplicationUser>>();
+
+    var dbContext =
+        scope.ServiceProvider
+        .GetRequiredService<ApplicationDbContext>();
 
     await DbSeeder.SeedRoles(roleManager);
+    await DbSeeder.SeedDevelopmentData(dbContext, userManager);
 }
 
 
@@ -211,7 +233,10 @@ using(var scope = app.Services.CreateScope())
 #region Middleware
 
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 
 app.UseAuthentication();
@@ -304,8 +329,6 @@ app.MapGet("/health", async (
 });
 
 #endregion
-
-
 
 
 

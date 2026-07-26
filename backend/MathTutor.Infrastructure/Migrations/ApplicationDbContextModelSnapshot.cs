@@ -30,20 +30,70 @@ namespace MathTutor.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CorrectAnswers")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("DateTaken")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DifficultyLevel")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IncorrectAnswers")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
 
                     b.Property<double>("Score")
                         .HasColumnType("double precision");
 
+                    b.Property<DateTime>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TopicId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalQuestions")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StudentId");
 
+                    b.HasIndex("TopicId");
+
                     b.ToTable("Assessments");
+                });
+
+            modelBuilder.Entity("MathTutor.Domain.Entities.AssessmentQuestion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AssessmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("AssessmentId", "QuestionId")
+                        .IsUnique();
+
+                    b.ToTable("AssessmentQuestions");
                 });
 
             modelBuilder.Entity("MathTutor.Domain.Entities.LearnerProfile", b =>
@@ -54,6 +104,9 @@ namespace MathTutor.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("LearningPreference")
                         .IsRequired()
                         .HasColumnType("text");
@@ -61,12 +114,31 @@ namespace MathTutor.Infrastructure.Migrations
                     b.Property<double>("OverallMastery")
                         .HasColumnType("double precision");
 
+                    b.Property<int>("RecommendedDifficultyLevel")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RecommendedNextTopic")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Strengths")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StrongestTopic")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("TeachingApproach")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("WeakestTopic")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Weaknesses")
                         .IsRequired()
@@ -92,8 +164,15 @@ namespace MathTutor.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("AssessmentId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("DateCompleted")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<double>("Performance")
                         .HasColumnType("double precision");
@@ -101,9 +180,16 @@ namespace MathTutor.Infrastructure.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("TopicId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("AssessmentId");
+
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("TopicId");
 
                     b.ToTable("LearningHistories");
                 });
@@ -122,6 +208,26 @@ namespace MathTutor.Infrastructure.Migrations
 
                     b.Property<int>("DifficultyLevel")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Explanation")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OptionA")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OptionB")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OptionC")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OptionD")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("QuestionText")
                         .IsRequired()
@@ -170,6 +276,37 @@ namespace MathTutor.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("MathTutor.Domain.Entities.StudentAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AssessmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SelectedAnswer")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("AssessmentId", "QuestionId")
+                        .IsUnique();
+
+                    b.ToTable("StudentAnswers");
                 });
 
             modelBuilder.Entity("MathTutor.Domain.Entities.Topic", b =>
@@ -405,7 +542,32 @@ namespace MathTutor.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MathTutor.Domain.Entities.Topic", "Topic")
+                        .WithMany()
+                        .HasForeignKey("TopicId");
+
                     b.Navigation("Student");
+
+                    b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("MathTutor.Domain.Entities.AssessmentQuestion", b =>
+                {
+                    b.HasOne("MathTutor.Domain.Entities.Assessment", "Assessment")
+                        .WithMany("AssessmentQuestions")
+                        .HasForeignKey("AssessmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MathTutor.Domain.Entities.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assessment");
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("MathTutor.Domain.Entities.LearnerProfile", b =>
@@ -421,13 +583,25 @@ namespace MathTutor.Infrastructure.Migrations
 
             modelBuilder.Entity("MathTutor.Domain.Entities.LearningHistory", b =>
                 {
+                    b.HasOne("MathTutor.Domain.Entities.Assessment", "Assessment")
+                        .WithMany()
+                        .HasForeignKey("AssessmentId");
+
                     b.HasOne("MathTutor.Domain.Entities.Student", "Student")
                         .WithMany("LearningHistory")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MathTutor.Domain.Entities.Topic", "Topic")
+                        .WithMany()
+                        .HasForeignKey("TopicId");
+
+                    b.Navigation("Assessment");
+
                     b.Navigation("Student");
+
+                    b.Navigation("Topic");
                 });
 
             modelBuilder.Entity("MathTutor.Domain.Entities.Question", b =>
@@ -450,6 +624,25 @@ namespace MathTutor.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MathTutor.Domain.Entities.StudentAnswer", b =>
+                {
+                    b.HasOne("MathTutor.Domain.Entities.Assessment", "Assessment")
+                        .WithMany("StudentAnswers")
+                        .HasForeignKey("AssessmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MathTutor.Domain.Entities.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assessment");
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -501,6 +694,13 @@ namespace MathTutor.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MathTutor.Domain.Entities.Assessment", b =>
+                {
+                    b.Navigation("AssessmentQuestions");
+
+                    b.Navigation("StudentAnswers");
                 });
 
             modelBuilder.Entity("MathTutor.Domain.Entities.Student", b =>
