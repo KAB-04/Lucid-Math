@@ -20,9 +20,6 @@ public class Question
 
     public int DifficultyLevel { get; set; }
 
-
-    // Relationship
-
     public int TopicId { get; set; }
 
     public Topic? Topic { get; set; }

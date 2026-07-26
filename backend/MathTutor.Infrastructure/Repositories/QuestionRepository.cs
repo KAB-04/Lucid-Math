@@ -1,5 +1,6 @@
 using MathTutor.Application.Interfaces.Repositories;
 using MathTutor.Domain.Entities;
+using MathTutor.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace MathTutor.Infrastructure.Repositories;
@@ -13,40 +14,20 @@ public class QuestionRepository : IQuestionRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Question>> GetAllAsync()
-    {
-        return await _context.Questions
-            .AsNoTracking()
-            .Include(q => q.Topic)
-            .OrderBy(q => q.Topic!.Name)
-            .ThenBy(q => q.DifficultyLevel)
-            .ThenBy(q => q.Id)
-            .ToListAsync();
-    }
+    public async Task<IEnumerable<Question>> GetAllAsync() =>
+        await _context.Questions.Include(q => q.Topic).AsNoTracking().OrderBy(q => q.Id).ToListAsync();
 
-    public async Task<Question?> GetByIdAsync(int id)
-    {
-        return await _context.Questions
-            .Include(q => q.Topic)
-            .FirstOrDefaultAsync(q => q.Id == id);
-    }
+    public async Task<Question?> GetByIdAsync(int id) =>
+        await _context.Questions.Include(q => q.Topic).FirstOrDefaultAsync(q => q.Id == id);
 
-    public async Task<IEnumerable<Question>> GetByTopicIdAsync(int topicId)
-    {
-        return await _context.Questions
-            .AsNoTracking()
-            .Include(q => q.Topic)
-            .Where(q => q.TopicId == topicId)
-            .OrderBy(q => q.DifficultyLevel)
-            .ThenBy(q => q.Id)
-            .ToListAsync();
-    }
+    public async Task<IEnumerable<Question>> GetByTopicIdAsync(int topicId) =>
+        await _context.Questions.Include(q => q.Topic).Where(q => q.TopicId == topicId)
+            .AsNoTracking().OrderBy(q => q.Id).ToListAsync();
 
     public async Task<Question> CreateAsync(Question question)
     {
         _context.Questions.Add(question);
         await _context.SaveChangesAsync();
-
         return question;
     }
 
