@@ -1,0 +1,102 @@
+import { useState } from 'react'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
+import { APP_ROUTES } from '../../constants/routes'
+import { useAuth } from '../../hooks/useAuth'
+import { getDashboardRouteForRole } from '../../utils/authRoutes'
+import type { FrontendApiError } from '../../types/api'
+import { Button } from '../../components/ui/Button'
+import { Card } from '../../components/ui/Card'
+import { FormError } from '../../components/ui/FormError'
+import { Input } from '../../components/ui/Input'
+
+const loginSchema = z.object({
+  Email: z.string().email('Enter a valid email address.'),
+  Password: z.string().min(1, 'Password is required.'),
+})
+
+type LoginFormValues = z.infer<typeof loginSchema>
+
+interface LocationState {
+  returnTo?: string
+}
+
+export const LoginPage = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
+  const { login } = useAuth()
+  const [formError, setFormError] = useState<string>()
+
+  const {
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    register,
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      Email: '',
+      Password: '',
+    },
+  })
+
+  const onSubmit = handleSubmit(async (values) => {
+    setFormError(undefined)
+
+    try {
+      const user = await login(values)
+      toast.success('Welcome back to Lucid Math.')
+      const state = location.state as LocationState | null
+      const returnTo = state?.returnTo ?? searchParams.get('returnTo')
+      navigate(returnTo || getDashboardRouteForRole(user.role), { replace: true })
+    } catch (error) {
+      const apiError = error as FrontendApiError
+      setFormError(apiError.message)
+    }
+  })
+
+  return (
+    <Card className="mx-auto w-full max-w-md">
+      <div className="mb-6">
+        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-primary)]">
+          Sign in
+        </p>
+        <h1 className="mt-2 text-3xl font-semibold text-[var(--color-primary)]">Continue learning</h1>
+        <p className="mt-2 text-sm leading-6 text-[var(--color-text-muted)]">
+          Use your registered Lucid Math email and password.
+        </p>
+      </div>
+
+      <form className="grid gap-4" onSubmit={onSubmit}>
+        <FormError message={formError} />
+        <Input
+          autoComplete="email"
+          error={errors.Email?.message}
+          label="Email"
+          type="email"
+          {...register('Email')}
+        />
+        <Input
+          autoComplete="current-password"
+          error={errors.Password?.message}
+          label="Password"
+          type="password"
+          {...register('Password')}
+        />
+        <Button isLoading={isSubmitting} type="submit">
+          Sign in
+        </Button>
+      </form>
+
+      <p className="mt-5 text-center text-sm text-[var(--color-text-muted)]">
+        New to Lucid Math?{' '}
+        <Link className="font-semibold text-[var(--color-primary)] underline" to={APP_ROUTES.register}>
+          Create a student account
+        </Link>
+      </p>
+    </Card>
+  )
+}

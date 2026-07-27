@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MathTutor.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a67ddd3f8ac97a977306bb44c9c060b2f3f7a18")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49b54b2cc0ed0804cd8dadaa3356419ea8cc71b7")]
 [assembly: System.Reflection.AssemblyProductAttribute("MathTutor.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MathTutor.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
