@@ -1,4 +1,5 @@
 using System.Text;
+using AutoMapper;
 using MathTutor.Application.Interfaces.Repositories;
 using MathTutor.Application.Interfaces.Services;
 using MathTutor.Application.Services;
@@ -8,21 +9,12 @@ using MathTutor.Infrastructure;
 using MathTutor.Infrastructure.Data;
 using MathTutor.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
-
-builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo(
-        Path.Combine(builder.Environment.ContentRootPath, "DataProtectionKeys")));
 
 
 
@@ -166,6 +158,19 @@ builder.Services.AddScoped<IQuestionService, QuestionService>();
 
 
 
+#region AutoMapper
+
+
+builder.Services.AddAutoMapper(
+    AppDomain.CurrentDomain.GetAssemblies());
+
+
+#endregion
+
+
+
+
+
 #region Controllers
 
 
@@ -195,16 +200,8 @@ using(var scope = app.Services.CreateScope())
         scope.ServiceProvider
         .GetRequiredService<RoleManager<IdentityRole>>();
 
-    var userManager =
-        scope.ServiceProvider
-        .GetRequiredService<UserManager<ApplicationUser>>();
-
-    var dbContext =
-        scope.ServiceProvider
-        .GetRequiredService<ApplicationDbContext>();
 
     await DbSeeder.SeedRoles(roleManager);
-    await DbSeeder.SeedDevelopmentData(dbContext, userManager);
 }
 
 
@@ -219,10 +216,7 @@ using(var scope = app.Services.CreateScope())
 #region Middleware
 
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseHttpsRedirection();
-}
+app.UseHttpsRedirection();
 
 
 app.UseAuthentication();
