@@ -36,20 +36,20 @@ Controller route: `api/[controller]`, controller name `AuthController`, so endpo
 }
 ```
 
-`AuthenticationResponse` body:
+`AuthenticationResponse` C# DTO serializes as camelCase JSON:
 
 ```json
 {
-  "Success": true,
-  "Message": "string",
-  "Token": "string",
-  "Expires": "2026-07-27T00:00:00Z"
+  "success": true,
+  "message": "string",
+  "token": "string",
+  "expires": "2026-07-27T00:00:00Z"
 }
 ```
 
-- Token property name: `Token`
-- Auth response success property: `Success`
-- Auth response message property: `Message`
+- Token property name: `token`
+- Auth response success property: `success`
+- Auth response message property: `message`
 - No `role`, `roles`, or `user` property is returned by auth endpoints.
 - Frontend derives the authenticated user and role from JWT claims.
 

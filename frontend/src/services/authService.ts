@@ -15,20 +15,24 @@ export interface AuthResult {
 }
 
 const mapAuthResponse = (response: AuthenticationResponse): AuthResult => {
-  if (!response.Success || !response.Token) {
-    throw new Error(response.Message || 'Authentication failed.')
+  const success = response.success ?? response.Success ?? false
+  const token = response.token ?? response.Token ?? null
+  const message = response.message ?? response.Message ?? 'Authentication failed.'
+
+  if (!success || !token) {
+    throw new Error(message)
   }
 
-  const user = mapTokenToAuthUser(response.Token)
+  const user = mapTokenToAuthUser(token)
 
   if (!user) {
-    throw new Error('The authentication token did not contain the expected Lucid Math claims.')
+    throw new Error('The authentication token did not contain the expected Lucid claims.')
   }
 
   return {
     response,
     user,
-    token: response.Token,
+    token,
   }
 }
 

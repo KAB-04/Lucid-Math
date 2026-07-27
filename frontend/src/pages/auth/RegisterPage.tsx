@@ -13,13 +13,20 @@ import { Card } from '../../components/ui/Card'
 import { FormError } from '../../components/ui/FormError'
 import { Input } from '../../components/ui/Input'
 import { Select } from '../../components/ui/Select'
+import { Logo } from '../../components/common/Logo'
 
-const registerSchema = z.object({
-  FullName: z.string().min(2, 'Full name is required.'),
-  Email: z.string().email('Enter a valid email address.'),
-  Password: z.string().min(8, 'Password must be at least 8 characters.'),
-  EducationLevel: z.string().min(1, 'Select your education level.'),
-})
+const registerSchema = z
+  .object({
+    FullName: z.string().min(2, 'Full name is required.'),
+    Email: z.string().email('Enter a valid email address.'),
+    Password: z.string().min(8, 'Password must be at least 8 characters.'),
+    ConfirmPassword: z.string().min(1, 'Re-enter your password.'),
+    EducationLevel: z.string().min(1, 'Select your education level.'),
+  })
+  .refine((values) => values.Password === values.ConfirmPassword, {
+    message: 'Passwords do not match.',
+    path: ['ConfirmPassword'],
+  })
 
 type RegisterFormValues = z.infer<typeof registerSchema>
 
@@ -38,16 +45,23 @@ export const RegisterPage = () => {
       FullName: '',
       Email: '',
       Password: '',
+      ConfirmPassword: '',
       EducationLevel: '',
     },
   })
 
   const onSubmit = handleSubmit(async (values) => {
     setFormError(undefined)
+    const request = {
+      FullName: values.FullName,
+      Email: values.Email,
+      Password: values.Password,
+      EducationLevel: values.EducationLevel,
+    }
 
     try {
-      const user = await registerAccount(values)
-      toast.success('Your Lucid Math account is ready.')
+      const user = await registerAccount(request)
+      toast.success('Your Lucid account is ready.')
       navigate(getDashboardRouteForRole(user.role), { replace: true })
     } catch (error) {
       const apiError = error as FrontendApiError
@@ -58,6 +72,7 @@ export const RegisterPage = () => {
   return (
     <Card className="mx-auto w-full max-w-md">
       <div className="mb-6">
+        <Logo className="mb-4 rounded-md bg-white" imageClassName="h-20" />
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-primary)]">
           Student registration
         </p>
@@ -94,6 +109,13 @@ export const RegisterPage = () => {
           label="Password"
           type="password"
           {...register('Password')}
+        />
+        <Input
+          autoComplete="new-password"
+          error={errors.ConfirmPassword?.message}
+          label="Re-enter password"
+          type="password"
+          {...register('ConfirmPassword')}
         />
         <Button isLoading={isSubmitting} type="submit">
           Create account

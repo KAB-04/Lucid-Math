@@ -13,10 +13,14 @@ export interface RegisterRequest {
 }
 
 export interface AuthenticationResponse {
-  Success: boolean
-  Message: string
-  Token: string | null
-  Expires: string
+  success?: boolean
+  message?: string
+  token?: string | null
+  expires?: string
+  Success?: boolean
+  Message?: string
+  Token?: string | null
+  Expires?: string
 }
 
 export interface AuthUser {

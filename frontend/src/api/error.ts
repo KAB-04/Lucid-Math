@@ -62,12 +62,15 @@ export const normalizeApiError = (error: unknown): FrontendApiError => {
   if (!axiosError.response) {
     const message = axiosError.code === 'ECONNABORTED'
       ? 'The request timed out. Please try again.'
-      : 'Unable to reach the Lucid Math API. Check that the backend is running.'
+      : 'Unable to reach the Lucid server. Make sure the backend is running and the development URL is correct.'
 
     return {
       status,
       message,
-      details: [message],
+      details: [
+        message,
+        'If the API is using HTTPS locally, trust the .NET developer certificate with dotnet dev-certs https --trust.',
+      ],
       isNetworkError: true,
       isUnauthorized: false,
       isForbidden: false,

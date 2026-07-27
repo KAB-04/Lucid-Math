@@ -3,12 +3,14 @@ import {
   LogOut,
   Menu,
 } from 'lucide-react'
+import { toast } from 'react-hot-toast'
 import { APP_ROUTES } from '../../constants/routes'
 import { useAuth } from '../../hooks/useAuth'
 import { getRoleDisplayName, type AuthRole } from '../../types/auth'
 import { Button } from '../ui/Button'
 import { Badge } from '../ui/Badge'
 import type { NavItem } from './navigation'
+import { Logo } from '../common/Logo'
 
 interface AppShellProps {
   role: AuthRole
@@ -29,21 +31,28 @@ export const AppShell = ({ navigation, role }: AppShellProps) => {
 
   const handleLogout = () => {
     logout()
+    toast.success('Signed out successfully.')
     navigate(APP_ROUTES.login, { replace: true })
   }
 
   return (
     <div className="min-h-svh bg-[var(--color-background)] text-[var(--color-text)] lg:flex">
-      <aside className="bg-[var(--color-primary)] text-white lg:fixed lg:inset-y-0 lg:left-0 lg:w-72">
-        <div className="flex items-center justify-between border-b border-white/15 px-5 py-4 lg:block lg:border-b-0 lg:px-6 lg:py-6">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/60">Lucid Math</p>
-            <h1 className="mt-1 text-xl font-semibold text-white">{getRoleDisplayName(role)} Workspace</h1>
+      <aside className="bg-[var(--color-primary)] text-white lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-72 lg:flex-col">
+        <div className="flex shrink-0 items-center justify-between border-b border-white/15 px-5 py-4 lg:block lg:px-5 lg:py-5">
+          <div className="flex items-center gap-3">
+            <Logo
+              className="rounded-md bg-white p-1.5"
+              imageClassName="h-11 w-11"
+              variant="compact"
+            />
+            <h1 className="text-base font-semibold leading-tight text-white">
+              {getRoleDisplayName(role)} Workspace
+            </h1>
           </div>
           <Menu aria-hidden="true" className="h-6 w-6 lg:hidden" />
         </div>
 
-        <nav className="flex gap-2 overflow-x-auto px-4 py-3 lg:grid lg:gap-1 lg:overflow-visible lg:px-4">
+        <nav className="flex gap-2 overflow-x-auto px-4 py-3 lg:grid lg:flex-1 lg:content-start lg:gap-1.5 lg:overflow-y-auto lg:px-4 lg:py-2">
           {navigation.map((item) => (
             <NavLink className={navLinkClass} key={item.path} to={item.path}>
               {item.icon}
@@ -52,7 +61,7 @@ export const AppShell = ({ navigation, role }: AppShellProps) => {
           ))}
         </nav>
 
-        <div className="hidden border-t border-white/15 p-4 lg:absolute lg:bottom-0 lg:left-0 lg:right-0 lg:block">
+        <div className="hidden shrink-0 border-t border-white/15 p-4 lg:block">
           <div className="rounded-lg bg-white/8 p-4">
             <p className="truncate text-sm font-semibold text-white">{user?.fullName}</p>
             <p className="mt-1 truncate text-xs text-white/65">{user?.email}</p>
@@ -76,7 +85,7 @@ export const AppShell = ({ navigation, role }: AppShellProps) => {
             Sign out
           </Button>
         </header>
-        <main className="px-5 py-6 lg:px-8 lg:py-8">
+        <main className="mx-auto w-full max-w-7xl px-5 py-6 lg:px-8 lg:py-8">
           <Outlet />
         </main>
       </div>

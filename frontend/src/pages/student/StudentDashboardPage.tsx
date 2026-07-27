@@ -1,52 +1,155 @@
-import { Activity, BookMarked, ClipboardCheck } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import { Activity, BarChart3, ClipboardCheck, Target } from 'lucide-react'
+import { normalizeApiError } from '../../api/error'
 import { Alert } from '../../components/ui/Alert'
 import { Badge } from '../../components/ui/Badge'
-import { Card } from '../../components/ui/Card'
-import { EmptyState } from '../../components/ui/EmptyState'
+import { Button } from '../../components/ui/Button'
+import { MetricCard } from '../../components/dashboard/MetricCard'
+import { DashboardSkeleton } from '../../components/dashboard/DashboardSkeleton'
+import { RecommendationCard } from '../../components/dashboard/RecommendationCard'
+import { TopicProgressList } from '../../components/dashboard/TopicProgressList'
+import { AssessmentTrend } from '../../components/dashboard/AssessmentTrend'
+import { StrengthWeaknessCard } from '../../components/dashboard/StrengthWeaknessCard'
+import { RecentActivityList } from '../../components/dashboard/RecentActivityList'
+import { QuickActions } from '../../components/dashboard/QuickActions'
 import { useAuth } from '../../hooks/useAuth'
+import { dashboardService } from '../../services/dashboardService'
+import type { FrontendApiError } from '../../types/api'
+import type { StudentDashboardViewModel } from '../../types/dashboard'
+import { formatNumber, formatPercent, formatToday } from '../../utils/format'
 
 export const StudentDashboardPage = () => {
   const { roleDisplayName, user } = useAuth()
+  const [dashboard, setDashboard] = useState<StudentDashboardViewModel | null>(null)
+  const [error, setError] = useState<FrontendApiError | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  const loadDashboard = useCallback(async (signal?: AbortSignal) => {
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const nextDashboard = await dashboardService.getStudentDashboard(signal)
+      setDashboard(nextDashboard)
+    } catch (requestError) {
+      if (signal?.aborted) {
+        return
+      }
+
+      setError(normalizeApiError(requestError))
+    } finally {
+      if (!signal?.aborted) {
+        setIsLoading(false)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const controller = new AbortController()
+    void loadDashboard(controller.signal)
+
+    return () => controller.abort()
+  }, [loadDashboard])
+
+  if (isLoading) {
+    return <DashboardSkeleton />
+  }
+
+  if (error) {
+    return (
+      <section className="grid gap-6" aria-live="polite">
+        <Alert title="Dashboard data unavailable" variant="danger">
+          {error.message}
+        </Alert>
+        <div>
+          <Button onClick={() => void loadDashboard()}>
+            Retry
+          </Button>
+        </div>
+      </section>
+    )
+  }
+
+  if (!dashboard) {
+    return (
+      <section className="grid gap-6" aria-live="polite">
+        <Alert title="Dashboard not available">
+          Lucid could not load your dashboard data yet. Please try again.
+        </Alert>
+        <div>
+          <Button onClick={() => void loadDashboard()}>
+            Retry
+          </Button>
+        </div>
+      </section>
+    )
+  }
+
+  const displayName = dashboard.student.fullName || user?.fullName || 'student'
+  const firstName = displayName.split(' ')[0]
 
   return (
-    <section className="grid gap-6">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--color-primary)]">
-            Student dashboard
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold text-[var(--color-primary)]">
-            Hello, {user?.fullName ?? 'student'}
-          </h1>
+    <section className="grid gap-6" aria-live="polite">
+      <div className="rounded-lg border border-[var(--color-border)] bg-white p-5 shadow-sm">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--color-primary)]">
+              {formatToday()}
+            </p>
+            <h1 className="mt-2 text-3xl font-semibold text-[var(--color-primary)]">
+              Welcome back, {firstName}. Let's make progress today.
+            </h1>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--color-text-muted)]">
+              {dashboard.student.educationLevel} learner · {dashboard.student.email}
+            </p>
+          </div>
+          <Badge variant="accent">{roleDisplayName ?? 'Student'}</Badge>
         </div>
-        <Badge variant="accent">{roleDisplayName}</Badge>
       </div>
 
-      <Alert title="Backend route ready">
-        Student dashboard data should be loaded from <strong>GET /api/dashboard/student</strong> in the next UI phase.
-      </Alert>
-
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <BookMarked className="h-6 w-6 text-[var(--color-primary)]" />
-          <p className="mt-4 text-sm text-[var(--color-text-muted)]">Topics</p>
-          <p className="mt-1 text-2xl font-semibold text-[var(--color-primary)]">Connected later</p>
-        </Card>
-        <Card>
-          <ClipboardCheck className="h-6 w-6 text-[var(--color-primary)]" />
-          <p className="mt-4 text-sm text-[var(--color-text-muted)]">Assessments</p>
-          <p className="mt-1 text-2xl font-semibold text-[var(--color-primary)]">No fake data</p>
-        </Card>
-        <Card>
-          <Activity className="h-6 w-6 text-[var(--color-primary)]" />
-          <p className="mt-4 text-sm text-[var(--color-text-muted)]">Progress</p>
-          <p className="mt-1 text-2xl font-semibold text-[var(--color-primary)]">Awaiting API UI</p>
-        </Card>
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <MetricCard
+          helper="Completed assessments recorded by Lucid."
+          icon={<ClipboardCheck aria-hidden="true" className="h-5 w-5" />}
+          label="Assessments completed"
+          value={formatNumber(dashboard.summary.completedAssessments)}
+        />
+        <MetricCard
+          helper="Average score across completed assessments."
+          icon={<BarChart3 aria-hidden="true" className="h-5 w-5" />}
+          label="Average score"
+          value={formatPercent(dashboard.summary.averageScore)}
+        />
+        <MetricCard
+          helper="Most recent completed assessment score."
+          icon={<Activity aria-hidden="true" className="h-5 w-5" />}
+          label="Latest score"
+          value={formatPercent(dashboard.summary.latestScore)}
+        />
+        <MetricCard
+          helper="Current learner profile mastery."
+          icon={<Target aria-hidden="true" className="h-5 w-5" />}
+          label="Mastery level"
+          value={formatPercent(dashboard.summary.overallMasteryPercentage)}
+        />
       </div>
 
-      <EmptyState title="Dashboard data is not mocked">
-        This foundation page demonstrates the layout and protected routing without inventing learning metrics.
-      </EmptyState>
+      <RecommendationCard recommendation={dashboard.recommendation} />
+
+      <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+        <TopicProgressList topics={dashboard.topicPerformance} />
+        <AssessmentTrend progress={dashboard.progress} />
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-[0.95fr_1.05fr]">
+        <StrengthWeaknessCard
+          strongestTopic={dashboard.strongestTopic}
+          weakestTopic={dashboard.weakestTopic}
+        />
+        <RecentActivityList activities={dashboard.recentActivities} />
+      </div>
+
+      <QuickActions />
     </section>
   )
 }

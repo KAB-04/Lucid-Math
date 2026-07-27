@@ -16,6 +16,11 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
+
 
 #region Database
 
@@ -168,6 +173,32 @@ builder.Services.AddControllers();
 
 
 
+#region CORS
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        "ViteFrontend",
+        policy =>
+        {
+            policy
+                .WithOrigins(
+                    "http://localhost:5173",
+                    "http://127.0.0.1:5173",
+                    "http://localhost:5174",
+                    "http://127.0.0.1:5174")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
+
+#endregion
+
+
+
+
 
 
 var app = builder.Build();
@@ -202,7 +233,13 @@ using(var scope = app.Services.CreateScope())
 #region Middleware
 
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
+
+app.UseCors("ViteFrontend");
 
 
 app.UseAuthentication();

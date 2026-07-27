@@ -1,12 +1,11 @@
 import { Outlet } from 'react-router-dom'
+import { Logo } from '../components/common/Logo'
 
 export const AuthLayout = () => (
   <main className="grid min-h-svh bg-[var(--color-background)] px-5 py-8 lg:grid-cols-[minmax(0,1fr)_minmax(380px,480px)] lg:px-10">
     <section className="hidden content-center pr-12 lg:grid">
       <div className="max-w-2xl">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
-          Lucid Math
-        </p>
+        <Logo className="rounded-lg bg-white p-3 shadow-sm" imageClassName="h-32" />
         <h1 className="mt-4 text-5xl font-semibold leading-tight text-[var(--color-primary)]">
           Calm foundations for stronger mathematics.
         </h1>

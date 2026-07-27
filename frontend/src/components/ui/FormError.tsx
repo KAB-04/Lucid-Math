@@ -8,7 +8,11 @@ export const FormError = ({ message }: FormErrorProps) => {
   }
 
   return (
-    <p className="rounded-md border border-[var(--color-error)]/50 bg-[var(--color-error)]/10 px-3 py-2 text-sm text-[var(--color-error)]">
+    <p
+      aria-live="polite"
+      className="rounded-md border border-[var(--color-error)]/50 bg-[var(--color-error)]/10 px-3 py-2 text-sm text-[var(--color-error)]"
+      role="alert"
+    >
       {message}
     </p>
   )

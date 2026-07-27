@@ -46,7 +46,7 @@ export const sessionStorageService = {
       return null
     }
 
-    const user = this.getUser() ?? mapTokenToAuthUser(token)
+    const user = mapTokenToAuthUser(token)
 
     if (!user) {
       this.clearSession()
