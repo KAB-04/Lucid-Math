@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "BGS7WUnELkI=",
-  "success": false,
+  "dgSpecHash": "zGqfamVjfgA=",
+  "success": true,
   "projectFilePath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Infrastructure\\MathTutor.Infrastructure.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\kojoa\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\mapster\\10.0.10\\mapster.10.0.10.nupkg.sha512",
@@ -26,20 +25,20 @@
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\10.0.9\\microsoft.entityframeworkcore.relational.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\10.0.9\\microsoft.extensions.caching.abstractions.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.caching.memory\\10.0.9\\microsoft.extensions.caching.memory.10.0.9.nupkg.sha512",
-    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.0\\microsoft.extensions.configuration.10.0.0.nupkg.sha512",
+    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.9\\microsoft.extensions.configuration.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.9\\microsoft.extensions.configuration.abstractions.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.configuration.binder\\10.0.9\\microsoft.extensions.configuration.binder.10.0.9.nupkg.sha512",
-    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.configuration.environmentvariables\\10.0.0\\microsoft.extensions.configuration.environmentvariables.10.0.0.nupkg.sha512",
-    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\10.0.0\\microsoft.extensions.configuration.fileextensions.10.0.0.nupkg.sha512",
-    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.configuration.json\\10.0.0\\microsoft.extensions.configuration.json.10.0.0.nupkg.sha512",
+    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.configuration.environmentvariables\\10.0.9\\microsoft.extensions.configuration.environmentvariables.10.0.9.nupkg.sha512",
+    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\10.0.9\\microsoft.extensions.configuration.fileextensions.10.0.9.nupkg.sha512",
+    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.configuration.json\\10.0.9\\microsoft.extensions.configuration.json.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.9\\microsoft.extensions.dependencyinjection.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.9\\microsoft.extensions.dependencyinjection.abstractions.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.9\\microsoft.extensions.dependencymodel.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.diagnostics\\10.0.9\\microsoft.extensions.diagnostics.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\10.0.9\\microsoft.extensions.diagnostics.abstractions.10.0.9.nupkg.sha512",
-    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\10.0.0\\microsoft.extensions.fileproviders.abstractions.10.0.0.nupkg.sha512",
-    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\10.0.0\\microsoft.extensions.fileproviders.physical.10.0.0.nupkg.sha512",
-    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\10.0.0\\microsoft.extensions.filesystemglobbing.10.0.0.nupkg.sha512",
+    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\10.0.9\\microsoft.extensions.fileproviders.abstractions.10.0.9.nupkg.sha512",
+    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\10.0.9\\microsoft.extensions.fileproviders.physical.10.0.9.nupkg.sha512",
+    "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\10.0.9\\microsoft.extensions.filesystemglobbing.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.identity.core\\10.0.9\\microsoft.extensions.identity.core.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.identity.stores\\10.0.9\\microsoft.extensions.identity.stores.10.0.9.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.extensions.logging\\10.0.9\\microsoft.extensions.logging.10.0.9.nupkg.sha512",
@@ -65,29 +64,5 @@
     "C:\\Users\\kojoa\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.4.0\\system.identitymodel.tokens.jwt.8.4.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
-      "projectPath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Infrastructure\\MathTutor.Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Infrastructure\\MathTutor.Infrastructure.csproj",
-      "libraryId": "AutoMapper",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    },
-    {
-      "code": "NU1605",
-      "level": "Error",
-      "message": "Warning As Error: Detected package downgrade: Microsoft.Extensions.Configuration from 10.0.9 to 10.0.0. Reference the package directly from the project to select a different version. \r\n MathTutor.Infrastructure -> Microsoft.AspNetCore.Identity.EntityFrameworkCore 10.0.9 -> Microsoft.Extensions.Identity.Stores 10.0.9 -> Microsoft.Extensions.Identity.Core 10.0.9 -> Microsoft.Extensions.Diagnostics 10.0.9 -> Microsoft.Extensions.Configuration (>= 10.0.9) \r\n MathTutor.Infrastructure -> Microsoft.Extensions.Configuration (>= 10.0.0)",
-      "projectPath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Infrastructure\\MathTutor.Infrastructure.csproj",
-      "filePath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Infrastructure\\MathTutor.Infrastructure.csproj",
-      "libraryId": "Microsoft.Extensions.Configuration",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  "logs": []
 }

@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "6eL8sacS8C0=",
+  "dgSpecHash": "CLwU/5bGxTQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Application\\MathTutor.Application.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\kojoa\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\mapster\\10.0.10\\mapster.10.0.10.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\mapster.core\\10.0.10\\mapster.core.10.0.10.nupkg.sha512",
@@ -37,18 +36,5 @@
     "C:\\Users\\kojoa\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.4.0\\microsoft.identitymodel.tokens.8.4.0.nupkg.sha512",
     "C:\\Users\\kojoa\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.4.0\\system.identitymodel.tokens.jwt.8.4.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
-      "projectPath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Application\\MathTutor.Application.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\kojoa\\Desktop\\Umat\\C-SHARP\\Math\\Lucid-Math\\backend\\MathTutor.Application\\MathTutor.Application.csproj",
-      "libraryId": "AutoMapper",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  "logs": []
 }

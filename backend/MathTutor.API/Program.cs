@@ -1,5 +1,4 @@
 using System.Text;
-using AutoMapper;
 using MathTutor.Application.Interfaces.Repositories;
 using MathTutor.Application.Interfaces.Services;
 using MathTutor.Application.Services;
@@ -161,19 +160,6 @@ builder.Services.AddScoped<ITopicRepository, TopicRepository>();
 builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
-#endregion
-
-
-
-
-
-#region AutoMapper
-
-
-builder.Services.AddAutoMapper(
-    AppDomain.CurrentDomain.GetAssemblies());
-
-
 #endregion
 
 
