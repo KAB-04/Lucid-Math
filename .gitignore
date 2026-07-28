@@ -12,3 +12,6 @@ dist/
 
 .env
 .env.*
+
+backend/publish/
+backend/*.zip
