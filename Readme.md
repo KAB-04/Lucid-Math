@@ -1,4 +1,12 @@
-# Lucid Math
+<p align="center">
+  <img src="docs/screenshots/lucid-logo-full.png" alt="Lucid Math logo" width="220" />
+</p>
+
+<h1 align="center">Lucid Math</h1>
+
+<p align="center">
+  Understand. Practice. Master.
+</p>
 
 Lucid Math is a focused mathematics learning platform for Ghanaian students and the teachers guiding their progress. The system combines a React frontend, an ASP.NET Core backend, PostgreSQL data storage, authentication, assessments, learner profiles, and progress tracking.
 
