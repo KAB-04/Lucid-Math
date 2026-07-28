@@ -219,6 +219,22 @@ using(var scope = app.Services.CreateScope())
 
 
     await DbSeeder.SeedRoles(roleManager);
+
+
+    if (app.Environment.IsDevelopment())
+    {
+        var dbContext =
+            scope.ServiceProvider
+            .GetRequiredService<ApplicationDbContext>();
+
+        var userManager =
+            scope.ServiceProvider
+            .GetRequiredService<UserManager<ApplicationUser>>();
+
+        await DbSeeder.SeedDevelopmentData(
+            dbContext,
+            userManager);
+    }
 }
 
 

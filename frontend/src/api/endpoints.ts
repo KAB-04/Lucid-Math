@@ -17,6 +17,7 @@ export const API_ENDPOINTS = {
   },
   assessments: {
     start: '/assessments/start',
+    availability: '/assessments/availability',
     submit: (assessmentId: number) => `/assessments/${assessmentId}/submit`,
     byId: (assessmentId: number) => `/assessments/${assessmentId}`,
     myHistory: '/assessments/my-history',

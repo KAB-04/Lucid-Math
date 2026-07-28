@@ -9,6 +9,12 @@ import { HomePage } from '../pages/HomePage'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { UnauthorizedPage } from '../pages/UnauthorizedPage'
 import { StudentDashboardPage } from '../pages/student/StudentDashboardPage'
+import { TopicsPage } from '../pages/student/TopicsPage'
+import { AssessmentsPage } from '../pages/student/AssessmentsPage'
+import { AssessmentTakePage } from '../pages/student/AssessmentTakePage'
+import { AssessmentResultPage } from '../pages/student/AssessmentResultPage'
+import { LearnerProfilePage } from '../pages/student/LearnerProfilePage'
+import { LearningHistoryPage } from '../pages/student/LearningHistoryPage'
 import { TeacherDashboardPage } from '../pages/teacher/TeacherDashboardPage'
 import { ComingSoonPage } from '../pages/ComingSoonPage'
 import { ProtectedRoute, PublicRoute } from './routeGuards'
@@ -26,10 +32,12 @@ export const AppRoutes = () => (
       <Route path="/student" element={<StudentLayout />}>
         <Route index element={<Navigate to={APP_ROUTES.student.dashboard} replace />} />
         <Route path="dashboard" element={<StudentDashboardPage />} />
-        <Route path="topics" element={<ComingSoonPage title="Topics" />} />
-        <Route path="assessments" element={<ComingSoonPage title="Assessments" />} />
-        <Route path="learner-profile" element={<ComingSoonPage title="Learner Profile" />} />
-        <Route path="learning-history" element={<ComingSoonPage title="Learning History" />} />
+        <Route path="topics" element={<TopicsPage />} />
+        <Route path="assessments" element={<AssessmentsPage />} />
+        <Route path="assessments/:assessmentId" element={<AssessmentTakePage />} />
+        <Route path="assessments/:assessmentId/result" element={<AssessmentResultPage />} />
+        <Route path="learner-profile" element={<LearnerProfilePage />} />
+        <Route path="learning-history" element={<LearningHistoryPage />} />
         <Route path="ai-tutor" element={<ComingSoonPage title="AI Tutor" />} />
         <Route path="settings" element={<ComingSoonPage title="Settings" />} />
       </Route>

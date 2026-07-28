@@ -20,6 +20,31 @@ public class AssessmentsController : ControllerBase
         _context = context;
     }
 
+    [HttpGet("availability")]
+    [Authorize(Roles = "Student,Admin")]
+    public async Task<IActionResult> Availability()
+    {
+        var availability = await _context.Questions
+            .AsNoTracking()
+            .GroupBy(q => new { q.TopicId, q.DifficultyLevel })
+            .Select(g => new
+            {
+                g.Key.TopicId,
+                g.Key.DifficultyLevel,
+                questionCount = g.Count()
+            })
+            .OrderBy(x => x.TopicId)
+            .ThenBy(x => x.DifficultyLevel)
+            .ToListAsync();
+
+        return Ok(new
+        {
+            success = true,
+            message = "Assessment availability retrieved successfully.",
+            data = availability
+        });
+    }
+
     [HttpPost("start")]
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> Start([FromBody] StartAssessmentRequest request)
@@ -29,6 +54,24 @@ public class AssessmentsController : ControllerBase
         if (student == null)
         {
             return NotFound(new { success = false, message = "Student profile was not found." });
+        }
+
+        if (request.TopicId.HasValue)
+        {
+            var topicExists = await _context.Topics
+                .AsNoTracking()
+                .AnyAsync(t => t.Id == request.TopicId.Value);
+
+            if (!topicExists)
+            {
+                return BadRequest(new { success = false, message = "The selected topic could not be found." });
+            }
+        }
+
+        if (request.DifficultyLevel.HasValue &&
+            (request.DifficultyLevel.Value < 1 || request.DifficultyLevel.Value > 3))
+        {
+            return BadRequest(new { success = false, message = "Difficulty level must be between 1 and 3." });
         }
 
         var questionQuery = _context.Questions
@@ -48,15 +91,51 @@ public class AssessmentsController : ControllerBase
 
         var availableQuestions = await questionQuery.ToListAsync();
         var questionCount = request.QuestionCount <= 0 ? 10 : Math.Min(request.QuestionCount, 50);
+
+        if (availableQuestions.Count == 0)
+        {
+            var anyQuestionsExist = await _context.Questions.AsNoTracking().AnyAsync();
+
+            if (!anyQuestionsExist)
+            {
+                return BadRequest(new { success = false, message = "No questions are available yet." });
+            }
+
+            if (request.TopicId.HasValue && request.DifficultyLevel.HasValue)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "No questions are available for the selected topic and difficulty."
+                });
+            }
+
+            if (request.TopicId.HasValue)
+            {
+                return BadRequest(new { success = false, message = "No questions are available for the selected topic." });
+            }
+
+            if (request.DifficultyLevel.HasValue)
+            {
+                return BadRequest(new { success = false, message = "No questions are available for the selected difficulty." });
+            }
+
+            return BadRequest(new { success = false, message = "No questions are available for this assessment request." });
+        }
+
+        if (availableQuestions.Count < questionCount)
+        {
+            return BadRequest(new
+            {
+                success = false,
+                message = $"Only {availableQuestions.Count} question(s) are available for this assessment request."
+            });
+        }
+
         var selectedQuestions = availableQuestions
             .OrderBy(_ => Guid.NewGuid())
             .Take(questionCount)
             .ToList();
-
-        if (selectedQuestions.Count == 0)
-        {
-            return BadRequest(new { success = false, message = "No questions were found for this assessment request." });
-        }
 
         var assessment = new Assessment
         {
