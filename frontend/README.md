@@ -1,32 +1,65 @@
-# React + TypeScript + Vite
+# Lucid Math Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React + TypeScript + Vite frontend for Lucid Math.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Public landing page.
+- Student authentication screens.
+- Student workspace:
+  - Dashboard
+  - Topics
+  - Assessments
+  - Learner Profile
+  - Learning History
+  - AI Tutor
+  - Settings
+- Teacher/Admin workspace:
+  - Dashboard
+  - Students
+  - Assessments
+  - Questions
+  - Analytics
+  - Settings
+- Shared dashboard shell with rounded sidebar, glass main panel, reusable cards, and responsive layout.
 
-## React Compiler
+## Configuration
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Create or update `frontend/.env`:
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```env
+VITE_API_BASE_URL=http://localhost:5152/api
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Do not put backend secrets or AI API keys in frontend `.env` files.
+
+## Commands
+
+```powershell
+npm install
+npm.cmd run dev
+npm.cmd run build
+npm.cmd run lint
+```
+
+Frontend dev URL:
+
+```text
+http://localhost:5173
+```
+
+## Backend Dependency
+
+The frontend expects the ASP.NET Core API to be running at:
+
+```text
+http://localhost:5152
+```
+
+AI Tutor requests go through the backend endpoint:
+
+```text
+POST /api/ai-tutor/message
+```
+
+The Gemini API key is configured on the backend with .NET user secrets, not in the frontend.

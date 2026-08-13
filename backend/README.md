@@ -28,6 +28,18 @@ The API reads PostgreSQL from `MathTutor.API/appsettings.json`:
 
 Update the connection string for your local PostgreSQL user before running migrations.
 
+For the AI Tutor, store the Gemini API key in local .NET user secrets:
+
+```bash
+dotnet user-secrets set "LUCID_API" "your-gemini-api-key" --project MathTutor.API
+```
+
+The default Gemini model is `gemini-3.6-flash`. Override it only if needed:
+
+```bash
+dotnet user-secrets set "LUCID_AI_MODEL" "gemini-3.6-flash" --project MathTutor.API
+```
+
 ## Commands
 
 Run these from the `backend` folder:
@@ -90,6 +102,7 @@ JWT tokens include role claims. Student accounts are assigned `Student` on regis
 | GET | `/api/learning-history/me` | Student |
 | GET | `/api/dashboard/student` | Student |
 | GET | `/api/dashboard/admin` | Admin |
+| POST | `/api/ai-tutor/message` | Student |
 
 Student question and assessment-start responses do not include `CorrectAnswer` or `Explanation`.
 
@@ -220,3 +233,13 @@ Base URL: `http://localhost:5152`
 14. Admin assessments
    - `GET /api/admin/assessments?page=1&pageSize=25`, Admin token
    - Expected: `200 OK`, paged assessment summaries.
+
+15. AI Tutor
+   - `POST /api/ai-tutor/message`, Student token
+   - Requires local `LUCID_API` user secret.
+```json
+{
+  "message": "Help me solve 2x + 5 = 15"
+}
+```
+   - Expected: `200 OK`, response includes `data.reply`.
