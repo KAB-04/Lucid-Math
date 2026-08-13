@@ -90,7 +90,7 @@ export const StudentDashboardPage = () => {
 
   return (
     <section className="grid gap-6" aria-live="polite">
-      <div className="rounded-lg border border-[var(--color-border)] bg-white p-5 shadow-sm">
+      <div className="rounded-lg border border-white/65 bg-white/72 p-5 shadow-[0_18px_45px_rgba(47,54,59,0.08)] backdrop-blur-xl ring-1 ring-white/45">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--color-primary)]">
@@ -107,7 +107,7 @@ export const StudentDashboardPage = () => {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           helper="Completed assessments recorded by Lucid."
           icon={<ClipboardCheck aria-hidden="true" className="h-5 w-5" />}
@@ -136,12 +136,12 @@ export const StudentDashboardPage = () => {
 
       <RecommendationCard recommendation={dashboard.recommendation} />
 
-      <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+      <div className="grid auto-rows-fr items-stretch gap-4 xl:grid-cols-2">
         <TopicProgressList topics={dashboard.topicPerformance} />
         <AssessmentTrend progress={dashboard.progress} />
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[0.95fr_1.05fr]">
+      <div className="grid auto-rows-fr items-stretch gap-4 xl:grid-cols-2">
         <StrengthWeaknessCard
           strongestTopic={dashboard.strongestTopic}
           weakestTopic={dashboard.weakestTopic}

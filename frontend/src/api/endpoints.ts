@@ -27,6 +27,9 @@ export const API_ENDPOINTS = {
     me: '/learner-profile/me',
     byStudent: (studentId: number) => `/learner-profile/student/${studentId}`,
   },
+  aiTutor: {
+    message: '/ai-tutor/message',
+  },
   learningHistory: {
     me: '/learning-history/me',
   },

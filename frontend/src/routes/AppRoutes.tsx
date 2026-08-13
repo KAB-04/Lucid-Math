@@ -13,9 +13,16 @@ import { TopicsPage } from '../pages/student/TopicsPage'
 import { AssessmentsPage } from '../pages/student/AssessmentsPage'
 import { AssessmentTakePage } from '../pages/student/AssessmentTakePage'
 import { AssessmentResultPage } from '../pages/student/AssessmentResultPage'
+import { AiTutorPage } from '../pages/student/AiTutorPage'
 import { LearnerProfilePage } from '../pages/student/LearnerProfilePage'
 import { LearningHistoryPage } from '../pages/student/LearningHistoryPage'
+import { SettingsPage } from '../pages/student/SettingsPage'
 import { TeacherDashboardPage } from '../pages/teacher/TeacherDashboardPage'
+import { TeacherAnalyticsPage } from '../pages/teacher/TeacherAnalyticsPage'
+import { TeacherAssessmentsPage } from '../pages/teacher/TeacherAssessmentsPage'
+import { TeacherQuestionsPage } from '../pages/teacher/TeacherQuestionsPage'
+import { TeacherSettingsPage } from '../pages/teacher/TeacherSettingsPage'
+import { TeacherStudentsPage } from '../pages/teacher/TeacherStudentsPage'
 import { ComingSoonPage } from '../pages/ComingSoonPage'
 import { ProtectedRoute, PublicRoute } from './routeGuards'
 
@@ -38,8 +45,8 @@ export const AppRoutes = () => (
         <Route path="assessments/:assessmentId/result" element={<AssessmentResultPage />} />
         <Route path="learner-profile" element={<LearnerProfilePage />} />
         <Route path="learning-history" element={<LearningHistoryPage />} />
-        <Route path="ai-tutor" element={<ComingSoonPage title="AI Tutor" />} />
-        <Route path="settings" element={<ComingSoonPage title="Settings" />} />
+        <Route path="ai-tutor" element={<AiTutorPage />} />
+        <Route path="settings" element={<SettingsPage />} />
       </Route>
     </Route>
     <Route element={<ProtectedRoute allowedRoles={['Admin']} />}>
@@ -47,11 +54,11 @@ export const AppRoutes = () => (
         <Route index element={<Navigate to={APP_ROUTES.teacher.dashboard} replace />} />
         <Route path="dashboard" element={<TeacherDashboardPage />} />
         <Route path="topics" element={<ComingSoonPage title="Topics" />} />
-        <Route path="questions" element={<ComingSoonPage title="Questions" />} />
-        <Route path="assessments" element={<ComingSoonPage title="Assessments" />} />
-        <Route path="students" element={<ComingSoonPage title="Students" />} />
-        <Route path="analytics" element={<ComingSoonPage title="Analytics" />} />
-        <Route path="settings" element={<ComingSoonPage title="Settings" />} />
+        <Route path="questions" element={<TeacherQuestionsPage />} />
+        <Route path="assessments" element={<TeacherAssessmentsPage />} />
+        <Route path="students" element={<TeacherStudentsPage />} />
+        <Route path="analytics" element={<TeacherAnalyticsPage />} />
+        <Route path="settings" element={<TeacherSettingsPage />} />
       </Route>
     </Route>
     <Route path={APP_ROUTES.unauthorized} element={<UnauthorizedPage />} />

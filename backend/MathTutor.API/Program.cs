@@ -8,6 +8,7 @@ using MathTutor.Infrastructure;
 using MathTutor.Infrastructure.Data;
 using MathTutor.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -19,6 +20,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
+
+
+if (builder.Environment.IsDevelopment())
+{
+    var dataProtectionKeysPath = Path.Combine(
+        builder.Environment.ContentRootPath,
+        "DataProtectionKeys");
+
+    builder.Services
+        .AddDataProtection()
+        .PersistKeysToFileSystem(
+            new DirectoryInfo(dataProtectionKeysPath))
+        .SetApplicationName("LucidMathTutor");
+}
 
 
 
@@ -124,6 +139,14 @@ builder.Services.AddAuthorization();
 
 
 
+
+
+builder.Services.AddHttpClient(
+    "LucidAi",
+    client =>
+    {
+        client.Timeout = TimeSpan.FromSeconds(45);
+    });
 
 
 #region Dependency Injection

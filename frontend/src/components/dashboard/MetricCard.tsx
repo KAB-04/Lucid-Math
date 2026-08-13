@@ -9,13 +9,13 @@ interface MetricCardProps {
 }
 
 export const MetricCard = ({ helper, icon, label, value }: MetricCardProps) => (
-  <Card className="min-h-36">
+  <Card className="flex min-h-44 flex-col justify-between">
     <div className="flex items-start justify-between gap-4">
       <div>
         <p className="text-sm font-medium text-[var(--color-text-muted)]">{label}</p>
         <p className="mt-2 text-2xl font-semibold text-[var(--color-primary)]">{value}</p>
       </div>
-      <div className="rounded-md bg-[var(--color-background)] p-2 text-[var(--color-primary)]">
+      <div className="rounded-md border border-white/70 bg-white/62 p-2 text-[var(--color-primary)] shadow-sm backdrop-blur">
         {icon}
       </div>
     </div>
