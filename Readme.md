@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/screenshots/lucid-logo-full.png" alt="Lucid Math logo" width="220" />
+</p>
+
 # Lucid Math
 
 Lucid Math is an adaptive mathematics learning platform for Ghanaian students and the teachers guiding their progress. It combines a React frontend, an ASP.NET Core backend, PostgreSQL persistence, Identity/JWT authentication, learner profiles, assessments, admin analytics, and a Gemini-backed AI Tutor integration.
